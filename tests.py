@@ -1,6 +1,6 @@
 import unittest
 
-from games import DEFEAT, DRAW, VICTORY, compareResults, higherNumber, highestSumOfNumbers, predictNumber
+from games import DEFEAT, DRAW, VICTORY, compareResults, higherNumber, highestSumOfNumbers, predictNumber, tournament, tournamentPoints, updateTournamentPoints
 
 class TestGames(unittest.TestCase):
     #TEST COMPARE RESULTS
@@ -42,6 +42,36 @@ class TestGames(unittest.TestCase):
         
     def test_highestSumOfNumbers_Draw(self):
         self.assertEqual(highestSumOfNumbers(5, 5, 5, 5), DRAW)
+        
+    #TEST TOURNAMENT POINTS
+    def test_tournamentPoints_playerWin(self):
+        self.assertEqual(tournamentPoints(VICTORY), (1, -1))
+    
+    def test_tournamentPoints_playerLose(self):
+        self.assertEqual(tournamentPoints(DEFEAT), (-1, 1))
+        
+    def test_tournamentPoints_Draw(self):
+        self.assertEqual(tournamentPoints(DRAW), (0, 0))
+        
+    #TEST UPDATE TOURNAMENT POINTS
+    def test_updateTournamentPoints(self):
+        self.assertEqual(updateTournamentPoints(1, 2, VICTORY), (2, 1))
+        
+    #TEST TOURNAMENT
+    def test_tournament_playerWin(self):
+        numbers1 = [10, 10, 5, 5]
+        numbers2 = [9, 5, 2, 2]
+        self.assertEqual(tournament(numbers1, numbers2, 9), VICTORY)
+    
+    def test_tournament_playerLose(self):
+        numbers1 = [1, 10, 3, 3]
+        numbers2 = [9, 5, 8, 2]
+        self.assertEqual(tournament(numbers1, numbers2, 1), DEFEAT)
+        
+    def test_tournament_Draw(self):
+        numbers1 = [1, 10, 4, 4]
+        numbers2 = [9, 5, 4, 4]
+        self.assertEqual(tournament(numbers1, numbers2, 9), DRAW)
         
 if __name__ == "__main__":
     unittest.main()
